@@ -128,15 +128,14 @@
       }
 
       reload(amount) {
-        if(typeof amount !== 'number' || amount <= 0) {
-          return "Error reloading!"
-        } else if (typeof amount === 'number' && amount > 2) {
-          this.totalProjectiles -= amount - 1
+        if (typeof amount !== 'number' || amount <= 0) {
+        return "Error reloading!";
+        } else if (typeof amount === 'number' && amount > 4) {
+          this.totalProjectiles -= amount -1;
         }
           this.totalProjectiles += amount;
         
-
-        return `${this.totalProjectiles} projectiles left!`
+        return `${this.totalProjectiles} projectiles left!`;
       }
       // 🧠 Constructor takes one argument: the total number of projectiles supported by the instance
       // 🧠 New instances initialize fully loaded and with the safety on
@@ -194,27 +193,24 @@
 
     // 👉 CHALLENGE 4 AntFarm
     class AntFarm {
-      constructor() {
-        this.ants = [
-            { name: "Jess", health: 100 },
-            { name: "Blake", health: 100 },
-            { name: "Jess", health: 100 }
-        ];
+    constructor(...antNames) {
+        this.ants = antNames.map((name) => ({ name, health: 100 }));
     }
 
     work() {
-      if (this.ants.length === 0){
-        return "No ants here. Did you work them to death?"
-      }
-      const totalAnts = this.ants.length;
-      const message = `${totalAnts} ants starting work!`;
+        if (this.ants.length === 0) {
+            return "No ants here. Did you work them to death?";
+        }
 
-      this.ants = this.ants.filter((ant) => {
+        const totalAnts = this.ants.length;
+        const message = `${totalAnts} ants starting work!`;
+
+        this.ants = this.ants.filter((ant) => {
             ant.health -= 20;
             return ant.health > 0;
         });
 
-        return message
+        return message;
     }
 
     feed(name) {
@@ -222,11 +218,9 @@
             return "No ants to feed.";
         }
 
-        
         const antsToFeed = this.ants.filter((ant) => ant.name === name);
 
         if (antsToFeed.length > 0) {
-          
             antsToFeed.forEach((ant) => {
                 ant.health += 15;
             });
