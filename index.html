@@ -101,42 +101,40 @@
 
     // 👉 CHALLENGE 2 NerfGun
     class NerfGun {
-      constructor(totalProjectiles, maxCapacity) {
-        this.maxCapacity = maxCapacity;
-        this.totalProjectiles = totalProjectiles > maxCapacity ? maxCapacity: totalProjectiles;
-        this.safetyOn = true
-      }
+      constructor(totalProjectiles) {
+      this.maxCapacity = totalProjectiles;
+      this.currentCapacity = totalProjectiles;
+      this.safetyOn = true;
+    }
 
-      shoot() {
-        if (this.safetyOn) {
-          return "Click!"
-        } else {
-          if(this.totalProjectiles > 0) {
-            this.maxCapacity++
-            this.totalProjectiles--
-            return "Bang!"
-          } else {
-            return "Click!"
-          }
-          
-        }
+    shoot() {
+      if (this.currentCapacity > 0 && !this.safetyOn) {
+        this.currentCapacity--;
+        return "Bang!";
+      } else {
+        return "Click!";
       }
+    }
 
-      toggleSafety() {
-        this.safetyOn = !this.safetyOn;
-        return this.safetyOn ? "Safety enabled!": "Safety disabled!"
+    reload(amount) {
+      if (typeof amount === "number" && amount > 0) {
+        if (this.currentCapacity + amount <= this.maxCapacity) {
+        this.currentCapacity += amount;
+      } else {
+        this.currentCapacity = this.maxCapacity;
       }
-
-      reload(amount) {
-        if (typeof amount !== 'number' || amount <= 0) {
+        return `${this.currentCapacity} projectiles left!`;
+      } else {
         return "Error reloading!";
-        } else if (typeof amount === 'number' && amount > 4) {
-          this.totalProjectiles -= amount -1;
-        }
-          this.totalProjectiles += amount;
-        
-        return `${this.totalProjectiles} projectiles left!`;
       }
+    }
+
+    toggleSafety() {
+      this.safetyOn = !this.safetyOn;
+      return this.safetyOn ? "Safety enabled!" : "Safety disabled!";
+    }
+
+      
       // 🧠 Constructor takes one argument: the total number of projectiles supported by the instance
       // 🧠 New instances initialize fully loaded and with the safety on
       // 🧠 Instances have a `shoot` method that takes no arguments:
@@ -153,7 +151,6 @@
 
     }
     
-
     // 👉 CHALLENGE 3 EBook
     class EBook {
       constructor(wholeBook, charOfBook) {
